@@ -1,0 +1,64 @@
+{
+  "name": "@shapeshift-labs/frontier-design",
+  "version": "0.1.0",
+  "description": "Renderer-neutral design-system tokens, semantic roles, recipes, and design frames for Frontier apps.",
+  "type": "module",
+  "license": "MIT",
+  "sideEffects": false,
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/siliconjungle/-shapeshift-labs-frontier-design.git"
+  },
+  "homepage": "https://github.com/siliconjungle/-shapeshift-labs-frontier-design#readme",
+  "bugs": {
+    "url": "https://github.com/siliconjungle/-shapeshift-labs-frontier-design/issues"
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE",
+    "benchmarks/package-bench.mjs",
+    "benchmarks/design-bench.mjs"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "build": "node build.mjs",
+    "test": "npm run build && npm run typecheck && node test/smoke.mjs && node test/fuzz.mjs --cases 200",
+    "typecheck": "tsc -p tsconfig.json --noEmit && tsc -p test/tsconfig.json --noEmit",
+    "fuzz": "npm run build && node test/fuzz.mjs",
+    "bench": "npm run build && node --expose-gc benchmarks/package-bench.mjs --out benchmarks/results/frontier-design-package-bench-latest.json",
+    "demo:inkwell": "npm run build && node demo/inkwell-editor-demo.mjs --out demo/inkwell-editor-demo.html",
+    "demo:inkwell-frontier": "npm run build && node demo/inkwell-frontier-editor.mjs --out demo/inkwell-frontier-editor.html",
+    "test:inkwell-frontier-demo": "npm run demo:inkwell-frontier && node demo/inkwell-frontier-editor-e2e.mjs",
+    "pack:dry": "npm pack --dry-run",
+    "readme:packages": "node benchmarks/package-readme-sections.mjs",
+    "readme:packages:check": "node benchmarks/package-readme-sections.mjs --check",
+    "prepack": "npm run readme:packages:check && npm run test"
+  },
+  "keywords": [
+    "frontier",
+    "design-system",
+    "design-tokens",
+    "semantic-tokens",
+    "recipes",
+    "renderer-neutral"
+  ],
+  "dependencies": {
+    "@shapeshift-labs/frontier": "0.1.9"
+  },
+  "devDependencies": {
+    "typescript": "^6.0.3"
+  }
+}

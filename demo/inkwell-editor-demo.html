@@ -1,0 +1,438 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Inkwell Editor Design System Demo</title>
+  <style>:root {
+  --frd-color-black: #000000;
+  --frd-color-ink-520: #3a3f4b;
+  --frd-color-ink-560: #3a3a3a;
+  --frd-color-ink-620: #333333;
+  --frd-color-ink-660: #2a2d35;
+  --frd-color-ink-700: #2a2a2a;
+  --frd-color-ink-760: #282828;
+  --frd-color-ink-820: #1e1e1e;
+  --frd-color-ink-840: #1a1b20;
+  --frd-color-ink-860: #171a21;
+  --frd-color-ink-900: #151517;
+  --frd-color-ink-920: #141416;
+  --frd-color-ink-940: #111117;
+  --frd-color-ink-960: #0d0d0d;
+  --frd-color-ink-980: #08080b;
+  --frd-color-purple-400: #7e6aff;
+  --frd-color-purple-500: #6940ff;
+  --frd-color-purple-560: #6342f5;
+  --frd-color-purple-620: #605bfc;
+  --frd-color-role-admin: #218e5d;
+  --frd-color-role-danger: #d75555;
+  --frd-color-role-demigod: #a44b8b;
+  --frd-color-text-100: #ffffff;
+  --frd-color-text-140: #f2f5fc;
+  --frd-color-text-180: #e0e0e0;
+  --frd-color-text-220: #c0c0c0;
+  --frd-color-text-320: #8b95a7;
+  --frd-color-text-360: #757575;
+  --frd-color-warm-400: #ffba40;
+  --frd-font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "DejaVu Sans Mono", "Courier New", monospace;
+  --frd-font-ui: Geist, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --frd-radius-card: 8px;
+  --frd-radius-control: 8px;
+  --frd-radius-media: 8px;
+  --frd-radius-panel: 8px;
+  --frd-radius-pill: 999px;
+  --frd-shadow-focus: 0 0 0 2px var(--frd-color-purple-500, #6940ff);
+  --frd-shadow-modal: 0 24px 54px rgba(0, 0, 0, 0.52);
+  --frd-shadow-soft: 0 2px 4px rgba(0, 0, 0, 0.15);
+  --frd-shadow-sticky: 0 4px 14px rgba(0, 0, 0, 0.45);
+  --frd-size-avatar: 48px;
+  --frd-size-control: 36px;
+  --frd-size-icon: 40px;
+  --frd-size-rail: 80px;
+  --frd-size-tile: 192px;
+  --frd-space-1: 4px;
+  --frd-space-2: 8px;
+  --frd-space-3: 12px;
+  --frd-space-4: 16px;
+  --frd-space-5: 20px;
+  --frd-space-6: 24px;
+  --frd-role-accent-admin: var(--frd-color-role-admin, #218e5d);
+  --frd-role-accent-danger: var(--frd-color-role-danger, #d75555);
+  --frd-role-accent-deep: var(--frd-color-purple-560, #6342f5);
+  --frd-role-accent-demigod: var(--frd-color-role-demigod, #a44b8b);
+  --frd-role-accent-onprimary: var(--frd-color-text-100, #ffffff);
+  --frd-role-accent-primary: var(--frd-color-purple-500, #6940ff);
+  --frd-role-accent-user: var(--frd-color-purple-620, #605bfc);
+  --frd-role-accent-warm: var(--frd-color-warm-400, #ffba40);
+  --frd-role-border-active: var(--frd-color-purple-500, #6940ff);
+  --frd-role-border-focus: var(--frd-color-purple-400, #7e6aff);
+  --frd-role-border-muted: var(--frd-color-ink-620, #333333);
+  --frd-role-border-rail: #1a1a1a;
+  --frd-role-border-soft: var(--frd-color-ink-660, #2a2d35);
+  --frd-role-border-strong: var(--frd-color-ink-520, #3a3f4b);
+  --frd-role-content-default: var(--frd-color-text-100, #ffffff);
+  --frd-role-content-inverse: var(--frd-color-black, #000000);
+  --frd-role-content-muted: var(--frd-color-text-220, #c0c0c0);
+  --frd-role-content-placeholder: var(--frd-color-text-360, #757575);
+  --frd-role-content-strong: var(--frd-color-text-140, #f2f5fc);
+  --frd-role-content-subtle: var(--frd-color-text-320, #8b95a7);
+  --frd-role-effect-focusring: var(--frd-shadow-focus, 0 0 0 2px #6940ff);
+  --frd-role-effect-modalshadow: var(--frd-shadow-modal, 0 24px 54px rgba(0, 0, 0, 0.52));
+  --frd-role-effect-softshadow: var(--frd-shadow-soft, 0 2px 4px rgba(0, 0, 0, 0.15));
+  --frd-role-effect-stickyshadow: var(--frd-shadow-sticky, 0 4px 14px rgba(0, 0, 0, 0.45));
+  --frd-role-layout-control: var(--frd-size-control, 36px);
+  --frd-role-layout-gap: var(--frd-space-4, 16px);
+  --frd-role-layout-rail: var(--frd-size-rail, 80px);
+  --frd-role-layout-tile: var(--frd-size-tile, 192px);
+  --frd-role-shape-card: var(--frd-radius-card, 8px);
+  --frd-role-shape-control: var(--frd-radius-control, 8px);
+  --frd-role-shape-media: var(--frd-radius-media, 8px);
+  --frd-role-shape-panel: var(--frd-radius-panel, 8px);
+  --frd-role-shape-pill: var(--frd-radius-pill, 999px);
+  --frd-role-surface-app: var(--frd-color-black, #000000);
+  --frd-role-surface-canvas: var(--frd-color-ink-940, #111117);
+  --frd-role-surface-card: var(--frd-color-ink-840, #1a1b20);
+  --frd-role-surface-cardflat: var(--frd-color-ink-820, #1e1e1e);
+  --frd-role-surface-control: var(--frd-color-ink-760, #282828);
+  --frd-role-surface-controlhover: var(--frd-color-ink-560, #3a3a3a);
+  --frd-role-surface-home: var(--frd-color-ink-940, #111117);
+  --frd-role-surface-homeband: var(--frd-color-ink-900, #151517);
+  --frd-role-surface-panel: var(--frd-color-ink-820, #1e1e1e);
+  --frd-role-surface-panelraised: var(--frd-color-ink-860, #171a21);
+  --frd-role-surface-rail: var(--frd-color-ink-960, #0d0d0d);
+  --frd-role-surface-thumbnail: var(--frd-color-ink-900, #151517);
+  --frd-role-type-mono: var(--frd-font-mono, ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "DejaVu Sans Mono", "Courier New", monospace);
+  --frd-role-type-ui: var(--frd-font-ui, Geist, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif);
+}
+
+.inkwell-demo {
+  background: var(--frd-role-surface-app);
+  color: var(--frd-role-content-default);
+  font-family: var(--frd-role-type-ui);
+}
+
+.demoRail {
+  background: var(--frd-role-surface-rail);
+  border-color: var(--frd-role-border-rail);
+  border-width: 1px;
+  border-style: solid;
+}
+
+.demoPanel {
+  background: var(--frd-role-surface-panel);
+  border-color: var(--frd-role-border-muted);
+  border-radius: var(--frd-role-shape-panel);
+  box-shadow: var(--frd-role-effect-softshadow);
+  border-width: 1px;
+  border-style: solid;
+}
+
+.demoPanelRaised {
+  background: var(--frd-role-surface-panelraised);
+  border-color: var(--frd-role-border-soft);
+  border-radius: var(--frd-role-shape-panel);
+  box-shadow: var(--frd-role-effect-modalshadow);
+  border-width: 1px;
+  border-style: solid;
+}
+
+.demoCard {
+  background: var(--frd-role-surface-card);
+  border-color: var(--frd-role-border-soft);
+  border-radius: var(--frd-role-shape-card);
+  box-shadow: var(--frd-role-effect-softshadow);
+  border-width: 1px;
+  border-style: solid;
+}
+
+.demoCardSelected {
+  background: var(--frd-role-surface-card);
+  border-color: var(--frd-role-border-active);
+  border-radius: var(--frd-role-shape-card);
+  box-shadow: 0 0 0 2px var(--frd-role-border-active);
+  border-width: 1px;
+  border-style: solid;
+}
+
+.demoControl {
+  background: var(--frd-role-surface-control);
+  border-color: var(--frd-role-border-strong);
+  color: var(--frd-role-content-muted);
+  border-radius: var(--frd-role-shape-control);
+  padding: var(--frd-space-2);
+  border-width: 1px;
+  border-style: solid;
+}
+
+.demoControlActive {
+  background: var(--frd-role-accent-primary);
+  border-color: var(--frd-role-accent-primary);
+  color: var(--frd-role-accent-onprimary);
+  border-radius: var(--frd-role-shape-control);
+  padding: var(--frd-space-2);
+  border-width: 1px;
+  border-style: solid;
+}
+
+.demoControlWarm {
+  background: var(--frd-role-accent-warm);
+  border-color: var(--frd-role-accent-warm);
+  color: var(--frd-role-content-inverse);
+  border-radius: var(--frd-role-shape-control);
+  padding: var(--frd-space-2);
+  border-width: 1px;
+  border-style: solid;
+}
+
+.demoInput {
+  background: var(--frd-role-surface-panel);
+  border-color: var(--frd-role-border-muted);
+  color: var(--frd-role-content-default);
+  border-radius: var(--frd-role-shape-control);
+  box-shadow: var(--frd-role-effect-stickyshadow);
+  font-family: var(--frd-role-type-ui);
+  border-width: 1px;
+  border-style: solid;
+}
+
+.demoInputActive {
+  background: var(--frd-role-surface-panel);
+  border-color: var(--frd-role-border-active);
+  color: var(--frd-role-content-default);
+  border-radius: var(--frd-role-shape-control);
+  box-shadow: var(--frd-role-effect-stickyshadow);
+  font-family: var(--frd-role-type-ui);
+  border-width: 1px;
+  border-style: solid;
+}
+
+.demoPill {
+  background: var(--frd-role-surface-control);
+  color: var(--frd-role-content-default);
+  border-radius: var(--frd-role-shape-pill);
+  padding: var(--frd-space-2);
+}
+
+.demoPillUser {
+  background: var(--frd-role-accent-user);
+  color: var(--frd-role-accent-onprimary);
+  border-radius: var(--frd-role-shape-pill);
+  padding: var(--frd-space-2);
+}
+
+.demoPillDemigod {
+  background: var(--frd-role-accent-demigod);
+  color: var(--frd-role-accent-onprimary);
+  border-radius: var(--frd-role-shape-pill);
+  padding: var(--frd-space-2);
+}
+
+.demoPillAdmin {
+  background: var(--frd-role-accent-admin);
+  color: var(--frd-role-accent-onprimary);
+  border-radius: var(--frd-role-shape-pill);
+  padding: var(--frd-space-2);
+}
+
+.demoThumb {
+  background: var(--frd-role-surface-thumbnail);
+  border-color: var(--frd-role-border-muted);
+  border-radius: var(--frd-role-shape-media);
+  border-width: 1px;
+  border-style: solid;
+}
+
+.demoThumbSelected {
+  background: var(--frd-role-surface-thumbnail);
+  border-color: var(--frd-role-border-active);
+  border-radius: var(--frd-role-shape-media);
+  border-width: 1px;
+  border-style: solid;
+}
+
+.demoCanvas {
+  background: var(--frd-role-surface-canvas);
+  border-color: var(--frd-role-border-soft);
+  border-radius: var(--frd-role-shape-panel);
+  border-width: 1px;
+  border-style: solid;
+}
+
+
+* { box-sizing: border-box; }
+html, body { margin: 0; min-height: 100%; background: var(--frd-role-surface-app); }
+body { min-height: 100vh; }
+.inkwell-demo { min-height: 100vh; display: grid; grid-template-columns: var(--frd-role-layout-rail) minmax(0, 1fr); }
+button, input, select { font: inherit; }
+button { cursor: pointer; }
+.demoRail { position: sticky; top: 0; height: 100vh; display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 12px 0; }
+.demoRailButton { width: 44px; height: 44px; display: inline-flex; align-items: center; justify-content: center; padding: 0; font-size: 18px; }
+.demoRailAvatar { margin-top: auto; border-radius: 999px; font-weight: 700; }
+.demoWorkspace { min-width: 0; min-height: 100vh; background: var(--frd-role-surface-home); display: grid; grid-template-rows: auto minmax(0, 1fr); }
+.demoTopbar { position: sticky; top: 0; z-index: 3; display: grid; grid-template-columns: minmax(280px, 800px) auto; align-items: center; justify-content: center; gap: 16px; padding: 16px; background: rgba(0, 0, 0, 0.72); backdrop-filter: blur(12px); border-bottom: 1px solid var(--frd-role-border-muted); }
+.demoPrompt { min-height: 58px; display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 12px; padding: 8px 8px 8px 18px; }
+.demoPromptText { min-width: 0; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; color: var(--frd-role-content-default); }
+.demoPromptSubmit { width: 42px; height: 42px; padding: 0; border-radius: 999px; }
+.demoTopMeta, .demoChipRow, .demoStageFooter { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.demoGrid { min-width: 0; min-height: 0; padding: 16px; display: grid; grid-template-columns: minmax(280px, 360px) minmax(420px, 1fr) minmax(280px, 340px); gap: 16px; }
+.demoPanel, .demoPanelRaised, .demoCanvas { min-width: 0; min-height: 0; border-style: solid; border-width: 1px; overflow: hidden; }
+.demoLibrary, .demoInspector { padding: 16px; display: flex; flex-direction: column; gap: 16px; }
+.demoSectionHeader { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.demoEyebrow { color: var(--frd-role-content-muted); font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
+.demoFeedRow { display: grid; grid-template-columns: 96px minmax(0, 1fr); gap: 12px; padding: 12px; border-style: solid; border-width: 1px; }
+.demoFeedMedia { width: 96px; aspect-ratio: 1 / 1; overflow: hidden; border-style: solid; border-width: 1px; }
+.demoFeedMedia img, .demoInspectorPreview img, .demoStageScene > img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.demoFeedBody { min-width: 0; display: grid; gap: 10px; align-content: start; }
+.demoFeedBody p { margin: 0; color: var(--frd-role-content-muted); line-height: 1.4; font-size: 14px; }
+.demoFeedUser { display: flex; align-items: center; gap: 10px; min-width: 0; }
+.demoFeedUser strong { color: var(--frd-role-content-default); font-size: 14px; }
+.demoFeedUser span:not(.demoAvatar):not(.demoAvatarDemigod) { display: block; color: var(--frd-role-content-subtle); font-size: 12px; }
+.demoAvatar { width: 36px; height: 36px; border-radius: 999px; background: var(--frd-role-accent-user); color: var(--frd-role-accent-onprimary); display: inline-flex; align-items: center; justify-content: center; font-weight: 700; flex: none; }
+.demoAvatarDemigod { background: var(--frd-role-accent-demigod); }
+.demoPill, .demoPillUser, .demoPillDemigod, .demoPillAdmin { display: inline-flex; align-items: center; min-height: 26px; padding: 0 10px; font-size: 12px; font-weight: 700; line-height: 1; }
+.demoStage { display: grid; grid-template-rows: auto minmax(0, 1fr) auto; }
+.demoStageToolbar { display: flex; align-items: center; gap: 8px; padding: 12px; border-bottom: 1px solid var(--frd-role-border-muted); }
+.demoStageToolbar button { width: 36px; height: 36px; padding: 0; }
+.demoStageToolbar .demoPill { margin-left: auto; }
+.demoStageScene { position: relative; min-height: 0; overflow: hidden; background: var(--frd-role-surface-home); }
+.demoStageScene > img { object-fit: cover; filter: saturate(0.9) brightness(0.72); }
+.demoSelectionBox { position: absolute; left: 18%; top: 18%; width: 44%; height: 38%; border: 2px solid var(--frd-role-border-active); box-shadow: 0 0 0 999px rgba(0, 0, 0, 0.22), 0 0 0 2px rgba(105, 64, 255, 0.22); }
+.demoSpriteCard { position: absolute; right: 22px; bottom: 22px; width: 164px; min-height: 92px; padding: 10px; border-radius: 8px; border: 1px solid var(--frd-role-border-soft); background: rgba(23, 26, 33, 0.92); color: var(--frd-role-content-strong); display: grid; gap: 8px; box-shadow: var(--frd-role-effect-modalshadow); }
+.demoSpriteCard img { width: 86px; justify-self: center; filter: drop-shadow(0 8px 18px rgba(0, 0, 0, 0.42)); }
+.demoSpriteCard span { text-align: center; font-size: 12px; color: var(--frd-role-content-muted); }
+.demoStageFooter { padding: 12px; border-top: 1px solid var(--frd-role-border-muted); }
+.demoInspectorPreview { width: 100%; aspect-ratio: 16 / 9; overflow: hidden; border-style: solid; border-width: 1px; }
+.demoField { display: grid; gap: 6px; color: var(--frd-role-content-muted); font-size: 12px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; }
+.demoField .demoInput { width: 100%; min-width: 0; min-height: 38px; padding: 0 10px; border-style: solid; border-width: 1px; outline: none; box-shadow: none; background: var(--frd-role-surface-control); }
+.demoField input.demoInput { caret-color: var(--frd-role-border-active); }
+.demoField select.demoInput { appearance: none; -webkit-appearance: none; padding-right: 34px; background-image: linear-gradient(45deg, transparent 50%, var(--frd-role-content-muted) 50%), linear-gradient(135deg, var(--frd-role-content-muted) 50%, transparent 50%); background-position: calc(100% - 17px) 16px, calc(100% - 11px) 16px; background-size: 6px 6px, 6px 6px; background-repeat: no-repeat; }
+.demoField .demoInput:focus { border-color: var(--frd-role-border-active); box-shadow: 0 0 0 2px rgba(105, 64, 255, 0.24); }
+.demoSwatches { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; }
+.demoSwatches span { min-height: 38px; border-radius: 8px; background: var(--swatch); border: 1px solid var(--frd-role-border-muted); }
+.demoJson { margin-top: auto; padding: 12px; border-radius: 8px; border: 1px solid var(--frd-role-border-muted); background: var(--frd-role-surface-rail); color: var(--frd-role-content-subtle); font-family: var(--frd-role-type-mono); font-size: 12px; line-height: 1.45; white-space: pre-wrap; }
+@media (max-width: 1120px) {
+  .demoGrid { grid-template-columns: minmax(260px, 340px) minmax(420px, 1fr); }
+  .demoInspector { grid-column: 1 / -1; min-height: 260px; }
+}
+@media (max-width: 820px) {
+  .inkwell-demo { grid-template-columns: 1fr; grid-template-rows: minmax(0, 1fr) 64px; }
+  .demoRail { position: fixed; inset: auto 0 0 0; width: 100%; height: 64px; flex-direction: row; justify-content: space-around; padding: 8px; z-index: 10; }
+  .demoRailAvatar { margin-top: 0; }
+  .demoWorkspace { padding-bottom: 64px; }
+  .demoTopbar { grid-template-columns: 1fr; justify-content: stretch; }
+  .demoGrid { grid-template-columns: 1fr; }
+  .demoStage { min-height: 560px; }
+}
+</style>
+</head>
+<body class="inkwell-demo">
+  <aside class="demoRail" aria-label="Editor sections">
+    <button class="demoRailButton demoControlActive" aria-label="Wish">✦</button>
+    <button class="demoRailButton demoControl" aria-label="Worlds">▣</button>
+    <button class="demoRailButton demoControl" aria-label="Library">⌕</button>
+    <button class="demoRailButton demoControl" aria-label="Settings">⚙</button>
+    <button class="demoRailButton demoControl demoRailAvatar" aria-label="Profile">J</button>
+  </aside>
+
+  <main class="demoWorkspace">
+    <header class="demoTopbar">
+      <div class="demoInputActive demoPrompt">
+        <span class="demoPromptText">Design the town gate palette with brighter foreground sprites</span>
+        <button class="demoPromptSubmit demoControlActive" aria-label="Submit wish">↑</button>
+      </div>
+      <div class="demoTopMeta">
+        <span class="demoPillUser">Latest</span>
+        <span class="demoPill">Random</span>
+        <span class="demoPill">Scene</span>
+      </div>
+    </header>
+
+    <section class="demoGrid" aria-label="Editor workspace">
+      <section class="demoPanel demoLibrary" aria-label="Asset palette">
+        <div class="demoSectionHeader">
+          <span class="demoEyebrow">Palette</span>
+          <button class="demoControl" aria-label="Search">⌕</button>
+        </div>
+        <article class="demoCardSelected demoFeedRow">
+          <div class="demoThumbSelected demoFeedMedia"><img src="assets/inkwell-hero-image.png" alt="" /></div>
+          <div class="demoFeedBody">
+            <div class="demoFeedUser">
+              <span class="demoAvatar">I</span>
+              <div><strong>@inkwell</strong><span>just now</span></div>
+            </div>
+            <p>Moonlit town gate, purple banners, bright playable silhouette.</p>
+            <div class="demoChipRow"><span class="demoPillUser">scene</span><span class="demoPill">256x256</span></div>
+          </div>
+        </article>
+        <article class="demoCard demoFeedRow">
+          <div class="demoThumb demoFeedMedia"><img src="assets/inkwell-footer.png" alt="" /></div>
+          <div class="demoFeedBody">
+            <div class="demoFeedUser">
+              <span class="demoAvatar demoAvatarDemigod">M</span>
+              <div><strong>@myth</strong><span>3m ago</span></div>
+            </div>
+            <p>Animated ember sprite with readable outline and warm idle glow.</p>
+            <div class="demoChipRow"><span class="demoPillDemigod">effect</span><span class="demoPill">loop</span></div>
+          </div>
+        </article>
+      </section>
+
+      <section class="demoCanvas demoStage" aria-label="Canvas">
+        <div class="demoStageToolbar">
+          <button class="demoControlActive" aria-label="Select">↖</button>
+          <button class="demoControl" aria-label="Brush">✎</button>
+          <button class="demoControl" aria-label="Eraser">⌫</button>
+          <button class="demoControlWarm" aria-label="Play">▶</button>
+          <span class="demoPill">100%</span>
+        </div>
+        <div class="demoStageScene">
+          <img src="assets/inkwell-hero-image.png" alt="" />
+          <div class="demoSelectionBox"></div>
+          <div class="demoSpriteCard">
+            <img src="assets/play-button.png" alt="" />
+            <span>Play anchor</span>
+          </div>
+        </div>
+        <div class="demoStageFooter">
+          <span class="demoPill">Town Square</span>
+          <span class="demoPill">24 nodes</span>
+          <span class="demoPillAdmin">Published draft</span>
+        </div>
+      </section>
+
+      <aside class="demoPanelRaised demoInspector" aria-label="Properties">
+        <div class="demoSectionHeader">
+          <span class="demoEyebrow">Properties</span>
+          <button class="demoControl" aria-label="More">⋯</button>
+        </div>
+        <div class="demoInspectorPreview demoThumbSelected">
+          <img src="assets/inkwell-hero-image.png" alt="" />
+        </div>
+        <label class="demoField">
+          <span>Name</span>
+          <input class="demoInput" value="Town gate palette" readonly />
+        </label>
+        <label class="demoField">
+          <span>Style</span>
+          <select class="demoInput" aria-label="Style">
+            <option>Feed first</option>
+            <option>High contrast</option>
+          </select>
+        </label>
+        <div class="demoSwatches" aria-label="Design roles">
+          <span style="--swatch: var(--frd-role-accent-primary)"></span>
+          <span style="--swatch: var(--frd-role-surface-panel)"></span>
+          <span style="--swatch: var(--frd-role-border-soft)"></span>
+          <span style="--swatch: var(--frd-role-accent-warm)"></span>
+        </div>
+        <div class="demoJson" aria-hidden="true">{
+  &quot;kind&quot;: &quot;frontier.registry.graph&quot;,
+  &quot;tokens&quot;: 51,
+  &quot;roles&quot;: 47,
+  &quot;recipes&quot;: 9
+}</div>
+      </aside>
+    </section>
+  </main>
+</body>
+</html>
