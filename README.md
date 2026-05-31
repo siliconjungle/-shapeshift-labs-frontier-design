@@ -317,11 +317,4 @@ The benchmark covers design-system definition, recipe materialization, CSS varia
 
 ## Why This Shape
 
-The first research pass pointed to three useful patterns:
-
-- Material UI and Tailwind show that CSS custom properties are a good web adapter and debugging surface.
-- Primer and Style Dictionary show the value of a JSON/source-of-truth token graph with generated outputs.
-- Chakra and Panda show that semantic tokens, recipe variants, and typed token lookup are the ergonomic layer developers use day to day.
-- The DTCG draft and Style Dictionary reference utilities show that `{path.to.token}` references need to work both as exact aliases and inside composite strings like borders and shadows.
-
-Frontier adds a fourth requirement: the design system should be diffable, inspectable, and renderer-neutral. This package keeps the source data serializable and emits registry graph evidence with `createDesignRegistryGraph(...)` so design decisions can be traced like other Frontier surfaces.
+Frontier design systems need a serializable token graph, exact and composite token references, semantic roles, recipe variants, and renderer-neutral output. This package keeps the source data diffable and emits registry graph evidence with `createDesignRegistryGraph(...)` so design decisions can be traced like other Frontier surfaces.
